@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jonk_lab/global/color.dart';
 import 'package:jonk_lab/global/globalData.dart';
+import 'package:logger/logger.dart';
 
 import '../controller/lab_basic_details.dart';
 import '../controller/new_ride_controller.dart';
@@ -42,13 +43,15 @@ class _PatientLocationPageState extends State<PatientLocationPage> {
             TextFormField(
               onChanged: (value) async {
                 if (value.isNotEmpty) {
-                  String mapKey = "AIzaSyCudnOm2h7hs1412HqGRn58uFpLn6Pdw18";
+                  String mapKey = "AIzaSyBaZWnJ0KrnuL_ile3HbJwrtD_zspXj0Lw";
+                  // String mapKey = "AIzaSyCudnOm2h7hs1412HqGRn58uFpLn6Pdw18";// Old Api Key
                   String? location =
                       "${labBasicDetailsController.labBasicDetailsData.value.address?.geoPoint.latitude.toString()},${labBasicDetailsController.labBasicDetailsData.value.address?.geoPoint.longitude.toString()}"; // Latitude and longitude of Delhi (you can use any location within Delhi)
                   int radiusInMeters = 20000;
                   String apiUrl =
                       "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$value&key=$mapKey&components=country:IN&location=$location&radius=$radiusInMeters";
                   var result = await apiRequest(apiUrl);
+                  Logger().log( Logger.level, result);
                   if (result != "response error") {
                     List<PredictedPlaces> listData = (result["predictions"]
                             as List)
@@ -77,8 +80,8 @@ class _PatientLocationPageState extends State<PatientLocationPage> {
                           newRideController.patientLocation.value =
                               predictedList[index].main_text! +
                                   predictedList[index].secondary_id!;
-                          String mapUrl =
-                              "AIzaSyCudnOm2h7hs1412HqGRn58uFpLn6Pdw18";
+                          String mapUrl = "AIzaSyBaZWnJ0KrnuL_ile3HbJwrtD_zspXj0Lw";
+                          // String mapUrl = "AIzaSyCudnOm2h7hs1412HqGRn58uFpLn6Pdw18";// Old Api Key
                           String apiUrl =
                               "https://maps.googleapis.com/maps/api/place/details/json?place_id=${predictedList[index].place_id!}&key=$mapUrl";
                           LatLng? result = await apiRequestForLatLng(apiUrl);

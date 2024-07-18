@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:462532468234:android:68ff290230446916d4c9f3",
+        "mobilesdk_app_id": "1:462532468234:android:e939271ddad63f13d4c9f3",
         "android_client_info": {
-          "package_name": "com.geteideas.jonk_lab"
+          "package_name": "com.thirtytwobrain.jonkk_lab"
         }
       },
       "oauth_client": [],
@@ -27,9 +27,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:462532468234:android:4b8a1210ef2c434fd4c9f3",
+        "mobilesdk_app_id": "1:462532468234:android:dd6213618dc87368d4c9f3",
         "android_client_info": {
-          "package_name": "com.geteideas.zonk_rider"
+          "package_name": "com.thirtytwobrain.jonkk_rider"
         }
       },
       "oauth_client": [],
