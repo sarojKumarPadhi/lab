@@ -439,7 +439,7 @@ class MasterList extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                if (_formKey.currentState!.validate()) {
+                if (_formKey.currentState?.validate()??false) {
                   Navigator.pop(context);
                   addTestList(context);
                 }
@@ -455,49 +455,61 @@ class MasterList extends StatelessWidget {
   addTestList(BuildContext context) {
     showDialog(
       context: context,
+
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),
+
           title: Text(
             'Add Test List',
             style: GoogleFonts.acme(),
           ),
-          content: Obx(() => ListView.builder(
-                itemCount: testMenuController.testMenuList.length,
-                itemBuilder: (context, index) {
-                  return ExpansionTile(
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(deviceWidth!*.005),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        imageUrl:
-                        testMenuController.testMenuList[index].imageUrl!,
-                        height: deviceHeight!*.04,
-                        width: deviceWidth!*.08,
-                        errorWidget: (context, url, error) {
-                          return const Icon(Icons.error);
-                        },
-                        placeholder: (context, url) {
-                          return Shimmer.fromColors(
-                              baseColor: Colors.white10,
-                              highlightColor: Colors.black26,
-                              child: SizedBox(
-                                height: deviceHeight!*.03,
-                                width: deviceWidth!*.05,
-                              )
-                          );
-                        },
-                      ),
-                    ),
-                    title:
+          content: Obx(() => SizedBox(
+            height: 300,
+            width: double.maxFinite,
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: testMenuController.testMenuList.length,
+
+                  itemBuilder: (context, index) {
+                    return
+                      ExpansionTile(
+
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(deviceWidth!*.005),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl:
+                            testMenuController.testMenuList[index].imageUrl!,
+                            height: deviceHeight!*.04,
+                            width: deviceWidth!*.08,
+                            errorWidget: (context, url, error) {
+                              return const Icon(Icons.error);
+                            },
+                            placeholder: (context, url) {
+                              return Shimmer.fromColors(
+                                  baseColor: Colors.white10,
+                                  highlightColor: Colors.black26,
+                                  child: SizedBox(
+                                    height: deviceHeight!*.03,
+                                    width: deviceWidth!*.05,
+                                  )
+                              );
+                            },
+                          ),
+                        ),
+                        title:
                         Text(testMenuController.testMenuList[index].category!),
-                    children: _buildSubcategories(
-                        testMenuController.testMenuList[index].subCategories!),
-                  );
-                },
-              )),
+                        children: _buildSubcategories(
+                            testMenuController.testMenuList[index].subCategories!),
+                      );
+                  },
+                ),
+          ),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {

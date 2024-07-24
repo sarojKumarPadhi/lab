@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jonk_lab/controller/ride_price_controller.dart';
 import 'package:jonk_lab/controller/rider_price_controller.dart';
 import 'package:jonk_lab/controller/test_samples_controller.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 import 'package:uuid/uuid.dart';
 import '../model/patient_data_model.dart';
@@ -18,7 +19,7 @@ import '../page/new_patient.dart';
 import 'master_list_controller.dart';
 
 class NewRideController extends GetxController {
-  int customerIndex=0;
+  int customerIndex = 0;
   LatLng? patientLatLng;
   RxString audioPath = "".obs;
   RxBool isRecording = false.obs;
@@ -69,11 +70,9 @@ class NewRideController extends GetxController {
     checkedPatientsId.add(uniqueCode.toString());
     priceController.price.value +=
         (patientList.length - 1) * ridePriceController.minimumRidePrice.value;
-
   }
 
   addNewPatientFromMasterList(String customerId) {
-
     int index = masterListController.masterList
         .indexWhere((element) => element.id == customerId);
 
@@ -98,7 +97,8 @@ class NewRideController extends GetxController {
   }
 
   editPatientDetailsUsingIndex(BuildContext context, int index) {
-    patientList[index].sampleList = List<String>.from(testSamplesController.testSamples);
+    patientList[index].sampleList =
+        List<String>.from(testSamplesController.testSamples);
     patientList[index].age = patientAge.value;
     patientList[index].phone = patientPhoneNumber.value;
     patientList[index].name = patientName.value;
@@ -145,8 +145,9 @@ class NewRideController extends GetxController {
 
   startRecording() async {
     try {
-      if (await Record().hasPermission()) {
-        await Record().start();
+      if (await AudioRecorder().hasPermission()) {
+        final Directory tempDir = await getTemporaryDirectory();
+        await AudioRecorder().start(const RecordConfig(), path: tempDir.path);
         isRecording.value = true;
       }
     } catch (e) {
@@ -156,7 +157,7 @@ class NewRideController extends GetxController {
 
   stopRecording() async {
     try {
-      String? path = await Record().stop();
+      String? path = await AudioRecorder().stop();
       isRecording.value = false;
       audioPath.value = path!;
       uploadAudioToFirebase();
@@ -175,17 +176,15 @@ class NewRideController extends GetxController {
   }
 
   Future uploadAudioToFirebase() async {
-    if (audioPath.value != null) {
-      var ref = FirebaseStorage.instance
-          .ref()
-          .child('labAudio')
-          .child(const Uuid().v4());
-      UploadTask uploadTask = ref.putFile(File(audioPath.value));
-      TaskSnapshot snapshot = await uploadTask;
-      NewPatient.audioUrl = await snapshot.ref.getDownloadURL();
-      print(NewPatient.audioUrl);
-      print(NewPatient.audioUrl);
-      print(NewPatient.audioUrl);
-    }
+    var ref = FirebaseStorage.instance
+        .ref()
+        .child('labAudio')
+        .child(const Uuid().v4());
+    UploadTask uploadTask = ref.putFile(File(audioPath.value));
+    TaskSnapshot snapshot = await uploadTask;
+    NewPatient.audioUrl = await snapshot.ref.getDownloadURL();
+    print(NewPatient.audioUrl);
+    print(NewPatient.audioUrl);
+    print(NewPatient.audioUrl);
   }
 }

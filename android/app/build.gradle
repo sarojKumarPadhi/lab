@@ -32,7 +32,7 @@ if (flutterVersionName == null) {
 
 
 android {
-    namespace "com.geteideasdev.jonnk_lab"
+    namespace "com.thirtytwobrain.jonkk_lab"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -51,13 +51,14 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.thirtytwobrain.jonnk_lab"
+        applicationId "com.thirtytwobrain.jonkk_lab"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode = flutterVersionCode.toInteger()
+        versionName = flutterVersionName
+        multiDexEnabled true
     }
 
      signingConfigs {

@@ -53,7 +53,6 @@ class _SearchRiderPageState extends State<SearchRiderPage> {
 
   ListenAcceptedRideController listenAcceptedRideController =
       Get.put(ListenAcceptedRideController());
-
   List<LatLng> pLineCoordinatesList = [];
   Set<Polyline> polyLineSet = {};
   var uuid = const Uuid();
@@ -323,7 +322,7 @@ class _SearchRiderPageState extends State<SearchRiderPage> {
                                               .address!
                                               .geoPoint
                                               .longitude),
-                                      zoom: 15)));
+                                      zoom: 14)));
                               Future.delayed(
                                 const Duration(seconds: 10),
                                 () {
@@ -344,6 +343,8 @@ class _SearchRiderPageState extends State<SearchRiderPage> {
 
                           // geoFireInitialize();
                         },
+                          myLocationEnabled:true,
+
                       ),
                     ),
                     isRideBook == true

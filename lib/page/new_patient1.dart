@@ -946,39 +946,43 @@ class _NewPatient1State extends State<NewPatient1>
             'Add Test List',
             style: GoogleFonts.acme(),
           ),
-          content: Obx(() => ListView.builder(
-                itemCount: testMenuController.testMenuList.length,
-                itemBuilder: (context, index) {
-                  return ExpansionTile(
-                    title:
-                        Text(testMenuController.testMenuList[index].category!),
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(deviceWidth! * .005),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        imageUrl:
-                            testMenuController.testMenuList[index].imageUrl!,
-                        height: deviceHeight! * .04,
-                        width: deviceWidth! * .08,
-                        errorWidget: (context, url, error) {
-                          return const Icon(Icons.error);
-                        },
-                        placeholder: (context, url) {
-                          return Shimmer.fromColors(
-                              baseColor: Colors.white10,
-                              highlightColor: Colors.black26,
-                              child: SizedBox(
-                                height: deviceHeight! * .03,
-                                width: deviceWidth! * .05,
-                              ));
-                        },
+          content: Obx(() => SizedBox(
+            height: 300,
+            width: double.maxFinite,
+            child: ListView.builder(
+                  itemCount: testMenuController.testMenuList.length,
+                  itemBuilder: (context, index) {
+                    return ExpansionTile(
+                      title:
+                          Text(testMenuController.testMenuList[index].category!),
+                      leading: ClipRRect(
+                        borderRadius: BorderRadius.circular(deviceWidth! * .005),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                          imageUrl:
+                              testMenuController.testMenuList[index].imageUrl!,
+                          height: deviceHeight! * .04,
+                          width: deviceWidth! * .08,
+                          errorWidget: (context, url, error) {
+                            return const Icon(Icons.error);
+                          },
+                          placeholder: (context, url) {
+                            return Shimmer.fromColors(
+                                baseColor: Colors.white10,
+                                highlightColor: Colors.black26,
+                                child: SizedBox(
+                                  height: deviceHeight! * .03,
+                                  width: deviceWidth! * .05,
+                                ));
+                          },
+                        ),
                       ),
-                    ),
-                    children: _buildSubcategories(
-                        testMenuController.testMenuList[index].subCategories!),
-                  );
-                },
-              )),
+                      children: _buildSubcategories(
+                          testMenuController.testMenuList[index].subCategories!),
+                    );
+                  },
+                ),
+          )),
           actions: <Widget>[
             TextButton(
               onPressed: () {
