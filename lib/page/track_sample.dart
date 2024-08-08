@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonk_lab/global/color.dart';
@@ -8,7 +9,7 @@ import '../controller/track_sample_controller.dart';
 import '../global/progressIndicator.dart';
 
 class TrackSample extends StatefulWidget {
-  const TrackSample({Key? key}) : super(key: key);
+  const TrackSample({super.key});
 
   @override
   State<TrackSample> createState() => _TrackSampleState();
@@ -42,7 +43,6 @@ class _TrackSampleState extends State<TrackSample> {
         padding: const EdgeInsets.all(5.0),
         child: Column(
           children: [
-
             Obx(() => trackSampleData.isLoading.value
                 ? Expanded(
                     child: trackSampleData.listOfSampleData.isNotEmpty
@@ -57,9 +57,11 @@ class _TrackSampleState extends State<TrackSample> {
                                 padding: const EdgeInsets.all(7),
                                 child: InkWell(
                                   onTap: () {
-                                    Get.to(() => AfterAcceptanceRidePage(
-                                        requestId: data["requestId"],
-                                        labUid: auth.toString()));
+                                    if (data['rideStatus'] != "idle") {
+                                      Get.to(() => AfterAcceptanceRidePage(
+                                          requestId: data["requestId"],
+                                          labUid: auth.toString()));
+                                    }
                                   },
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -117,53 +119,85 @@ class _TrackSampleState extends State<TrackSample> {
                                                   ),
                                                 ],
                                               ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  // Replace "digit" with the actual value of each digit of the OTP
-                                                  for (int i = 0;
-                                                      i < otp.length;
-                                                      i++)
-                                                    Container(
-                                                      margin:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal:
-                                                                  deviceWidth! *
-                                                                      .005),
-                                                      width: deviceWidth! * .07,
-                                                      // Adjust width and height as needed
-                                                      height:
-                                                          deviceHeight! * .05,
-                                                      // Adjust height and
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.blue),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                      ),
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                        otp[i],
-                                                        // Display each digit of the OTP
+                                              data["rideStatus"] == "idle"
+                                                  ? ElevatedButton(
+                                                      onPressed: () async {
+                                                        debugPrint(
+                                                            data['requestId']);
+                                                        await FirebaseDatabase
+                                                            .instance
+                                                            .ref()
+                                                            .child(
+                                                                "active_labs/$auth/${data['requestId']}")
+                                                            .remove();
+                                                        trackSampleData
+                                                            .getAllSampleData();
+                                                      },
+                                                      style: const ButtonStyle(
+                                                          backgroundColor:
+                                                              WidgetStatePropertyAll(
+                                                                  Colors.red)),
+                                                      child: const Text(
+                                                        "Cancel",
                                                         style: TextStyle(
-                                                          color: Colors.blue,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize:
-                                                              deviceWidth! *
-                                                                  .05,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  const SizedBox(
-                                                    width: 5,
-                                                  )
-                                                ],
-                                              )
+                                                            color:
+                                                                Colors.white),
+                                                      ))
+                                                  : Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceEvenly,
+                                                      children: [
+                                                        // Replace "digit" with the actual value of each digit of the OTP
+                                                        for (int i = 0;
+                                                            i < otp.length;
+                                                            i++)
+                                                          Container(
+                                                            margin: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        deviceWidth! *
+                                                                            .005),
+                                                            width:
+                                                                deviceWidth! *
+                                                                    .07,
+                                                            // Adjust width and height as needed
+                                                            height:
+                                                                deviceHeight! *
+                                                                    .05,
+                                                            // Adjust height and
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              border: Border.all(
+                                                                  color: Colors
+                                                                      .blue),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                            ),
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Text(
+                                                              otp[i],
+                                                              // Display each digit of the OTP
+                                                              style: TextStyle(
+                                                                color:
+                                                                    Colors.blue,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize:
+                                                                    deviceWidth! *
+                                                                        .05,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        const SizedBox(
+                                                          width: 5,
+                                                        )
+                                                      ],
+                                                    )
                                             ],
                                           ),
                                           const SizedBox(height: 10),
@@ -206,7 +240,8 @@ class _TrackSampleState extends State<TrackSample> {
                                                   const SizedBox(width: 10),
                                                   Text(
                                                     data["riderDetails"]
-                                                        ["riderName"],
+                                                            ?["riderName"] ??
+                                                        "Not Accepted",
                                                     style: TextStyle(
                                                         fontSize:
                                                             deviceWidth! * .045,
@@ -234,14 +269,19 @@ class _TrackSampleState extends State<TrackSample> {
                                               Container(
                                                 decoration: BoxDecoration(
                                                     color: data["rideStatus"] ==
-                                                        "accepted"?Colors.green: data["rideStatus"] ==
-                                                        "cancelled"?Colors.red:Colors.blue,
-                                                  borderRadius: BorderRadius.circular(deviceWidth!*.01)
-                                                ),
+                                                            "accepted"
+                                                        ? Colors.green
+                                                        : data["rideStatus"] ==
+                                                                "cancelled"
+                                                            ? Colors.red
+                                                            : Colors.blue,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            deviceWidth! *
+                                                                .01)),
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal:
                                                         deviceWidth! * .03),
-
                                                 child: Text(
                                                   data["rideStatus"] ==
                                                           "accepted"
@@ -255,9 +295,13 @@ class _TrackSampleState extends State<TrackSample> {
                                                               : data["rideStatus"] ==
                                                                       "completed"
                                                                   ? "Completed"
-                                                                  : "On Trip",
-                                                  style:  TextStyle(
-                                                      fontSize: deviceWidth!*.055,
+                                                                  : data["rideStatus"] ==
+                                                                          "idle"
+                                                                      ? "Idle"
+                                                                      : "On Trip",
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          deviceWidth! * .055,
                                                       color: Colors
                                                           .white), // Text color changed to white
                                                 ),

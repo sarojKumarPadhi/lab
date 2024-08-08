@@ -24,7 +24,7 @@ import '../service/push_notification_service.dart';
 import 'new_patient.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => HomePageState();
@@ -64,10 +64,15 @@ class HomePageState extends State<HomePage> {
 
   Future<bool> checkConnectivity() async {
     final connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      return true;
+    print("Checking... connectvity : $connectivityResult");
+    for (var contectvity in connectivityResult) {
+      if (contectvity == ConnectivityResult.mobile ||
+          contectvity == ConnectivityResult.wifi ||
+          contectvity == ConnectivityResult.ethernet) {
+        return true;
+      }
     }
+
     return false;
   }
 
