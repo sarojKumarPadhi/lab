@@ -11,19 +11,16 @@ import 'package:jonk_lab/page/introSliderScreen.dart';
 import 'package:jonk_lab/page/userRegistration.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-
-
   getDeviceToken() async {
-    FirebaseMessaging messaging=FirebaseMessaging.instance;
-    String? deviceToken=await messaging.getToken();
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    String? deviceToken = await messaging.getToken();
     print(deviceToken);
   }
 

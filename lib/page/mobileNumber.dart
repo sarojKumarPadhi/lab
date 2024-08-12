@@ -9,7 +9,7 @@ import '../auth/sendOtp.dart';
 import '../global/color.dart';
 
 class MobileNumber extends StatefulWidget {
-  const MobileNumber({Key? key}) : super(key: key);
+  const MobileNumber({super.key});
 
   @override
   State<MobileNumber> createState() => _MobileNumberState();

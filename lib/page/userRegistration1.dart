@@ -9,8 +9,6 @@ import '../global/globalData.dart';
 import '../global/progressIndicator.dart';
 import '../permission_handler/device_location_permission.dart';
 
-
-
 final _formKey = GlobalKey<FormState>();
 
 class UserRegistration1 extends StatefulWidget {
@@ -98,8 +96,8 @@ class _UserRegistration1State extends State<UserRegistration1> {
                 ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
-                          const MaterialStatePropertyAll<Color>(Colors.black),
-                      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                          const WidgetStatePropertyAll<Color>(Colors.black),
+                      shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)))),
                   onPressed: () {
                     Navigator.of(context)
@@ -137,8 +135,7 @@ class _UserRegistration1State extends State<UserRegistration1> {
           builder: (context) {
             return AlertDialog(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(deviceWidth!*.01)
-              ),
+                  borderRadius: BorderRadius.circular(deviceWidth! * .01)),
               title: const Text('Select District',
                   style: TextStyle(
                       color: Colors.black87, fontWeight: FontWeight.bold)),
@@ -170,8 +167,8 @@ class _UserRegistration1State extends State<UserRegistration1> {
                 ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
-                          const MaterialStatePropertyAll<Color>(Colors.black),
-                      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                          const WidgetStatePropertyAll<Color>(Colors.black),
+                      shape: WidgetStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)))),
                   onPressed: () {
                     Navigator.of(context)
@@ -217,6 +214,7 @@ class _UserRegistration1State extends State<UserRegistration1> {
               SizedBox(
                 height: deviceHeight * .02,
               ),
+
               ///--------for country---------------
               FadeInUp(
                 duration: const Duration(milliseconds: 2000),
@@ -249,6 +247,7 @@ class _UserRegistration1State extends State<UserRegistration1> {
               SizedBox(
                 height: deviceHeight * .02,
               ),
+
               ///-----------------for state----------------
               FadeInUp(
                 duration: const Duration(milliseconds: 2000),
@@ -292,6 +291,7 @@ class _UserRegistration1State extends State<UserRegistration1> {
               SizedBox(
                 height: deviceHeight * .02,
               ),
+
               ///----------------for district-------------------
               FadeInUp(
                 duration: const Duration(milliseconds: 2000),
@@ -413,8 +413,8 @@ class _UserRegistration1State extends State<UserRegistration1> {
                       }
                     },
                     style: ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(buttonColor),
-                        shape: MaterialStatePropertyAll(
+                        backgroundColor: WidgetStatePropertyAll(buttonColor),
+                        shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),

@@ -9,7 +9,7 @@ import 'package:jonk_lab/page/mobileNumber.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class IntroSliderScreen extends StatefulWidget {
-  const IntroSliderScreen({Key? key}) : super(key: key);
+  const IntroSliderScreen({super.key});
 
   @override
   State<IntroSliderScreen> createState() => _IntroSliderScreenState();
@@ -47,9 +47,9 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                             height: height * .1,
                           ),
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(deviceWidth!*.01),
+                            borderRadius:
+                                BorderRadius.circular(deviceWidth! * .01),
                             child: Image.asset(
-                            
                               "assets/images/introFirst.jpg",
                               width: deviceWidth! * .8,
                             ),
@@ -65,7 +65,7 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                                 textAlign: TextAlign.center,
                                 // Center align the text horizontally
                                 style: TextStyle(
-                                    fontSize: width*.07,
+                                    fontSize: width * .07,
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -77,15 +77,15 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.white70,
-                          secondIntroBackgroundColor
-                        ])
-                  ),
-                  child: AnimatedSwitcher( duration: const Duration(microseconds: 400),
+                      gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                        Colors.white70,
+                        secondIntroBackgroundColor
+                      ])),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(microseconds: 400),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Column(
@@ -94,12 +94,13 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                             height: height * .1,
                           ),
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(deviceWidth!*.01),
+                            borderRadius:
+                                BorderRadius.circular(deviceWidth! * .01),
                             child: Image.asset(
-                              fit:  BoxFit.fill,
+                              fit: BoxFit.fill,
                               "assets/images/introSecond.jpg",
                               width: deviceWidth! * .8,
-                              height: deviceHeight!*.3,
+                              height: deviceHeight! * .3,
                             ),
                           ),
                           SizedBox(
@@ -132,7 +133,8 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                           height: height * .1,
                         ),
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(deviceWidth!*.01),
+                          borderRadius:
+                              BorderRadius.circular(deviceWidth! * .01),
                           child: Image.asset(
                             "assets/images/introThird.jpg",
                             width: deviceWidth! * .8,
@@ -195,8 +197,7 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),
-                                          backgroundColor:
-                                          primaryColor,
+                                          backgroundColor: primaryColor,
                                           elevation: 1,
                                           shadowColor: Colors.black),
                                       child: const Text(
@@ -222,8 +223,7 @@ class _IntroSliderScreenState extends State<IntroSliderScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                           ),
-                                          backgroundColor:
-                                              primaryColor,
+                                          backgroundColor: primaryColor,
                                           elevation: 1,
                                           shadowColor: Colors.black),
                                       child: const Text(

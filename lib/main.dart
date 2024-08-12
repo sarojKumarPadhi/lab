@@ -4,8 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jonk_lab/core/utils/initial_biinding.dart';
 import 'package:jonk_lab/page/splash_screen.dart';
-
+import 'package:jonk_lab/routes/app_routes.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:responsive_framework/src/responsive_value.dart'
+    as responsve_condition;
 import 'firebase_options.dart';
 
 @pragma('vm:entry-point')
@@ -33,9 +37,36 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
+      builder: (context, widget) => ResponsiveBreakpoints.builder(
+        child: Builder(builder: (context) {
+          return ResponsiveScaledBox(
+              width: ResponsiveValue<double?>(context,
+                  defaultValue: null,
+                  conditionalValues: [
+                    const responsve_condition.Condition.equals(
+                        name: MOBILE, value: 450),
+                    const responsve_condition.Condition.equals(
+                        name: TABLET, value: 800),
+                    const responsve_condition.Condition.equals(
+                        name: DESKTOP, value: 1920),
+                    const responsve_condition.Condition.equals(
+                        name: '4K', value: double.infinity),
+                  ]).value,
+              child: ClampingScrollWrapper.builder(context, widget!));
+        }),
+        breakpoints: [
+          const Breakpoint(start: 0, end: 450, name: MOBILE),
+          const Breakpoint(start: 451, end: 800, name: TABLET),
+          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+          // const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+        ],
+      ),
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      // home: const SplashScreen(),
+      getPages: AppRoutes.pages,
+      initialRoute: AppRoutes.INITIAL_ROUTE,
+      initialBinding: InitialBiinding(),
     );
   }
 }

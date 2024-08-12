@@ -217,11 +217,11 @@ class _UserRegistrationState extends State<UserRegistration> {
                             }
                           },
                           style: ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
+                              backgroundColor: WidgetStatePropertyAll(
                                   ternAndConditionsController.isChecked.value
                                       ? primaryColor
                                       : secondaryColor),
-                              shape: MaterialStatePropertyAll(
+                              shape: WidgetStatePropertyAll(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
                                 ),

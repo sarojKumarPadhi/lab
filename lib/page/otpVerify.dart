@@ -15,7 +15,7 @@ import '../global/color.dart';
 import '../global/progressIndicator.dart';
 
 class OtpVerify extends StatefulWidget {
-  const OtpVerify({Key? key}) : super(key: key);
+  const OtpVerify({super.key});
 
   @override
   State<OtpVerify> createState() => OtpVerifyState();
